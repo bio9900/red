@@ -1,4 +1,5 @@
 import asyncio
+import multiprocessing
 
 import aiohttp
 import uvloop
@@ -49,4 +50,8 @@ async def main():
             for response in responses:
                 print((await response.text()))
 
-uvloop.run(main())
+def main():
+    uvloop.run(main())
+
+for _ in range(2):
+    multiprocessing.Process(target=main).start()
