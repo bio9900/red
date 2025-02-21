@@ -42,7 +42,7 @@ headers = {
 
 data = {"country":"RU","targetId":8878880,"appVer":"5221","retryCount":0,"excludeIps":[""],"pioneer":True,"rid":8029,"clz":0,"ever":10109,"picUrl":"http://staticgs.sandboxol.com/sandbox/avatar/1722350941634476.jpg","clientType":1,"name":"NULLОWNS","mapId":"m1008_2","packageName":"blockymods","lang":"en"}
 
-async def main():
+async def run():
     async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(limit=0)) as session:
         while True:
             tasks = [session.post("http://130.61.18.134:9902/v1/dispatch", headers=headers, json=data) for _ in range(1)]
@@ -51,7 +51,7 @@ async def main():
                 print((await response.text()))
 
 def main():
-    uvloop.run(main())
+    uvloop.run(run())
 
 for _ in range(2):
     multiprocessing.Process(target=main).start()
