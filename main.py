@@ -1,6 +1,5 @@
 import asyncio
 import multiprocessing
-import time
 
 import aiohttp
 import uvloop
