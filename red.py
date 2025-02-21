@@ -1,5 +1,6 @@
 import asyncio
 import multiprocessing
+import time
 
 import aiohttp
 import uvloop
@@ -34,7 +35,7 @@ headers = {
     "X-UrlPath": "/v1/dispatch",
     "Access-Token": "ELPJaCzz5+V0e25U08NkzF3yNgcLHlLBeYSU4fJvPkMlGgTzfEqXwTRlW++nSbW0mHmKQhRHJg9Q/7jfcRiCO/buqZ1mx8kkOFBQZygR8Pv1Bsj0Dp4bB+mcFZ2lbvTSLGMAVu75vVqiJkOhUlCesE/151hcyIABmeqtwX8VsGOlfO2EjRPSFgnM12473qMGj1ChH5wkx2H/enez4eVG+VhOywdpzfdVv4D1TYPsHiANd/+J7v/4e1EDnizVmsBkiXdrImL3gEu8WaeADCy4Gp+h3Jt7GHdjfjYK6JSy89VAWQ0W0ce6QrqVoNXW52Y/tHaitof6W5tp3aGITFmdLg==",
     "Content-Type": "application/json; charset=UTF-8",
-    "Host": "130.61.18.134:9902",
+    "Host": "142.132.142.224",
     "Connection": "Keep-Alive",
     "Accept-Encoding": "gzip",
     "User-Agent": "okhttp/4.11.0"
@@ -45,10 +46,10 @@ data = {"country":"RU","targetId":8878880,"appVer":"5221","retryCount":0,"exclud
 async def run():
     async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(limit=0)) as session:
         while True:
-            tasks = [session.post("http://130.61.18.134:9902/v1/dispatch", headers=headers, json=data) for _ in range(1)]
-            responses = await asyncio.gather(*tasks)
-            for response in responses:
-                print((await response.text()))
+            tasks = [session.post("http://142.132.142.224", headers=headers, json=data) for _ in range(10000)]
+            start_time = time.time()
+            await asyncio.gather(*tasks)
+            print(time.time() - start_time)
 
 def main():
     uvloop.run(run())
